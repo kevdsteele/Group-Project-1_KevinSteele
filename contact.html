@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Hop'n Brew Contact List!</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!--Firebase-->
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+  
+</head>
+
+<body>
+
+  <div class="container">
+
+ 
+      <div class="col-lg-8">
+          <br>
+        
+            <div class="row">
+               <br>
+                <div class="form-group col-md-7">
+                <input class="form-control form-control-lg" id="name-input" placeholder="Your Name:" type="text">
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-7">
+                <input class="form-control form-control-lg" id="email-input" placeholder="Your Email:" type="email">    
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="form-group col-md-7">
+                <textarea class="form-control form-control-lg" id="messages-input" placeholder="Your Message:" rows="5"></textarea>
+                </div>  
+            </div>
+
+            <div class="row">
+            <div class="form-group col-md-7 justify-content-center">
+              <button class="btn btn-secondary btn-lg" id="add-user" type="submit">Send Message</button>
+              </div>  
+            </div>
+
+      </div>
+
+    </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+   var firebaseConfig = {
+    
+    apiKey: "AIzaSyDE3_11naowktsLw-bEZxFSwOv8VawBMkc",
+    authDomain: "hopinbrew.firebaseapp.com",
+    databaseURL: "https://hopinbrew.firebaseio.com",
+    projectId: "hopinbrew",
+    storageBucket: "hopinbrew.appspot.com",
+    messagingSenderId: "839591263082",
+    appId: "1:839591263082:web:07ec0df0eea18972"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var database = firebase.database();
+
+    // Capture Button Click
+    $("#add-user").on("click", function(event) {
+      // prevent page from refreshing when form tries to submit itself
+      event.preventDefault();
+
+      // Capture user inputs and store them into variables
+      var name = $("#name-input").val().trim();
+      var email = $("#email-input").val().trim();
+      var messages = $("#messages-input").val().trim();
+      
+      var newEmp = {
+          name: name,
+          email: email,
+          messages: messages,
+          };
+
+      database.ref().push(newEmp);
+      
+      // Console log each of the user inputs to confirm we are receiving them
+      console.log(name);
+      console.log(email);
+      console.log(messages);
+      
+            // Clear sessionStorage
+      sessionStorage.clear();
+
+      // Store all content into sessionStorage
+      sessionStorage.setItem("name", name);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("messages", messages);
+
+ });
+
+    // By default display the content from sessionStorage
+    $("#name-display").text(sessionStorage.getItem("name"));
+    $("#email-display").text(sessionStorage.getItem("email"));
+    $("#messages-display").text(sessionStorage.getItem("messages"));
+   
+   
+  </script>
+
+</body>
+
+</html>

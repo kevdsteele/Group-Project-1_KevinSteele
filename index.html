@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+
+  <title>HOP'N BREW Group Project</title>
+<!-- Bootstrap ref-->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  
+<!--Google Maps API-->  
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDw0JZhy_QiGa9aBDIXyLP0lIqUXMPado8&libraries=places"></script>
+  
+<!--Jquery-->
+ <script src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="crossorigin="anonymous"></script>
+  
+<!--Google Fonts-->
+<link href="https://fonts.googleapis.com/css?family=Fredericka+the+Great&display=swap" rel="stylesheet">
+<link href='https://fonts.googleapis.com/css?family=Arvo:700' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Raleway:300,100' rel='stylesheet' type='text/css'>
+
+<!--CSS -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.7.2/animate.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css">
+<link rel="stylesheet" type ="text/css" href="assets/css/style.css">
+
+<!--Tockify Event Calendar-->
+
+<script data-cfasync="false" data-tockify-script="embed" src="https://public.tockify.com/browser/embed.js"></script>
+
+  <!--Firebase-->
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+
+<!--Javascript-->
+<script type ="text/javascript" src="assets/javascript/script2.js"></script>
+
+
+
+
+
+</head>
+
+<body id="page-top">
+
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg fixed-top" id="mainNav">
+        <div class="container">
+          <a class="navbar-brand" href="#page-top"><img class="brand-img" src ="assets/images/HopnBrewSmall2.png"></a>
+          <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+            Menu
+            <i class="fas fa-bars"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarResponsive">
+            <ul class="navbar-nav text-uppercase ml-auto">
+              <li class="nav-item">
+                <a class="nav-link" href="#search">Search</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#events">Events</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#team">Team</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>    
+
+<!-- landing Page-->
+  <header class="masthead">
+        <div class="container">
+          <div class="welcome-text">
+              <div class="welcome-text">
+
+                  <div class="welcome-description">
+
+                    <div class="d-inline-block">
+                        Welcome To 
+                    </div>
+
+                    <div class="animated infinite bounce delay-2s d-inline-block slow">
+                        HOP'n
+                    </div>
+                    
+                   <div class="d-inline-block">
+                      Brew
+                   </div>
+                    
+                    
+                  </div>
+                  </div>
+                  <div class="intro-heading text-uppercase">Your DMV Resource for finding local breweries and HOP'n Events!</div>
+            <section>
+                <div id="action">
+                    <div id="keg">
+                        <div id="pipe-handle"></div>
+                        <div id="pipe"></div>       
+                        <div id="pipe-front"></div>
+                    </div>
+                
+                    <div class="glass">
+                        <div class="beer"></div>
+                        <div class="handle">
+                            <div class="top-right"></div>
+                            <div class="bottom-right"></div>
+                        </div>
+                        <div class="front-glass"></div>
+                    </div>
+                </div>
+            </section>
+          </div>
+        </div>
+</header>
+
+
+<!-- Search Section -->
+ 
+<section class="search-box page-section" id="search">
+
+    <!-- Modal used to display search errors -->
+    <div class="modal fade" id="search-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="exampleModalLongTitle">Error</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <h3></h3>
+              <p>No results found. Please adjust your search parameters</p>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+              
+            </div>
+          </div>
+        </div>
+      </div>
+
+        <div class="container">
+                <div class="row">
+                  <div class="col-lg-12 text-center">
+                    <h2 class="section-heading text-uppercase">  DMV Brewery Search </h2>
+            
+                  </div>
+                  
+                </div>
+                <div class="container" id="search-bar">
+                        
+                                <div class="row">
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                                
+                                            </div>
+                                            
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                                <select class="form-control search-slt" id="zip-select">
+                                                        <option zip="20009">Select DMV State</option>
+                                                        <option zip="20009">Washigton DC</option>
+                                                        <option zip="20910">Maryland</option>
+                                                        <option zip="22201">Virginia</option>
+                                                  
+                                                    </select>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                                <select class="form-control search-slt" id="rad-select">
+                                                        <option radius="1609">Select Radius</option>
+                                                        <option radius="1609">1 Mile</option>
+                                                        <option radius="4827">3 Miles</option>
+                                                        <option radius="8045">5 Miles</option>
+                                                        <option radius="16090">10 Miles</option>
+                                                      
+                                                    </select>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                            <select class="form-control search-slt" id="yelp-select">
+                                                <option rating="0">Select Yelp Rating</option>
+                                                <option rating="3">3+ Stars</option>
+                                                <option rating="4">4+ Stars</option>
+                                                <option rating="5">5 Stars</option>
+                                                
+                                            </select>
+                                        </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0 text-right">
+                                          <button type="button" class="btn btn-secondary w-100" id="search-btn">Search</button>
+                                      </div>
+                                        <div class="col-lg-2 col-md-2 col-sm-12 p-0">
+                                                
+                                            </div>
+                                            
+                                </div>
+                  
+               </div>  
+                        
+                      
+    
+    <div class="container-fluid">
+        <div class="row" id="results-header">
+            <div class="col-md-12">
+                    
+                <nav aria-label="search navigation" id="pag-nav">
+                    <span class="d-inline-block"><ul class="pagination justify-content-left w-25 ">
+                        <li class="pr-2">Results</li>
+                                          
+                    </ul>
+                   </span>
+                   <span class="d-inline-block">
+                    <ul class="pagination justify-content-right " id="search-nav">
+                        
+                                          
+                    </ul>
+                    </span>
+                </nav>
+            </div>
+       
+    </div>  
+
+    <div class="row">
+        <div class="col-md-6 results-block" id="results">
+            
+        </div>
+
+        <div class="col-md-6 map-box mx-0 px-0" id="gmap">
+                          
+        </div>
+    </div>
+</div>
+
+<!--End Search Section-->
+</section>  
+
+<!-- Events Section -->
+
+<section class="page-section" id="events">
+
+        <div class="container-fluid">
+                <div class="row">
+                  <div class="col-lg-12 text-center">
+                    <h2 class="section-heading text-uppercase">What's HOP'n in the DMV! </h2>
+
+                  </div>
+                  
+                  
+                </div>
+                
+        </div>    
+        <div data-tockify-component="pinboard" data-tockify-calendar="brewconnoisseur"></div>    
+              
+    </section>
+
+
+<!--End Event-->
+
+<!-- Team Section-->
+
+<!-- Team -->
+<section class="page-section" id="team">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-12 text-center">
+              <h2 class="section-heading text-uppercase">The HOP'n Web Developement Team</h2>
+              <h3 class="section-subheading text-muted"></h3>
+            </div>
+          </div>
+
+         
+
+          <div class="row text-center team-row">
+            <div class="col-sm-4">
+              <div class="team-member">
+                <img class="mx-auto rounded-circle" src="assets/images/MelvinsPic.JPG" alt="">
+                <h4>Melvin Moore </h4>
+                <h5 class="text-muted">Lead Designer</h5>
+                <p class="text-muted">HTML</p>
+                <p class="text-muted">CSS</p>
+                <p class="text-muted">Anitmations</p>
+                <ul class="list-inline social-buttons">
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="team-member">
+                <img class="mx-auto rounded-circle" src="assets/images/NormsPic.JPG" alt="">
+                <h4>Norman Capers</h4>
+                <h5 class="text-muted">Designer</h5>
+                <p class="text-muted">HTML</p>
+                <p class="text-muted">CSS</p>
+                <p class="text-muted">Anitmations</p>
+                <ul class="list-inline social-buttons">
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <div class="col-sm-4">
+              <div class="team-member">
+                <img class="mx-auto rounded-circle" src="assets/images/KevinsPic.JPG" alt="">
+                <h4>Kevin Steele</h4>
+                <h5 class="text-muted">Developer</h5>
+                <p class="text-muted">Javascript</p>
+                <p class="text-muted">JQUERY</p>
+                <p class="text-muted">APIs</p>
+                <ul class="list-inline social-buttons">
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-twitter"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-facebook-f"></i>
+                    </a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a href="#">
+                      <i class="fab fa-linkedin-in"></i>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+          
+
+        </div>
+          
+      </section>
+    
+
+
+<!--End Team Section -->
+
+<!-- Contact Form Section-->
+<section class="page-section contact-section" id="contact" >
+
+  
+  <!-- Modal -->
+  <div class="modal fade" id="contact-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLongTitle">Mailing List</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <h3 id="form-name"></h3>
+          <p>Thanks for joining our mailing list!</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary modal-btn" data-dismiss="modal">Close</button>
+          
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container">
+
+ <div class="col-lg-7">
+    <h3 class="section-heading text-left contact">Want to stay connected to what's HOP'n in the DMV? Join our mailing list!</h3>
+ </div>
+        
+ <form id="contact-form">
+
+  <div class="form-group w-50">
+    <input class="form-control form-control-lg" id="name-input" placeholder="Your Name:" type="text">
+    </div>       
+          
+    <div class="form-group w-50">
+      <input class="form-control form-control-lg" id="email-input" placeholder="Your Email:" type="email">    
+    </div> 
+
+    <div class="form-group w-50">
+        <textarea class="form-control form-control-lg" id="messages-input" placeholder="Have feedback? We'd love to hear from you!" rows="5"></textarea>
+    </div>            
+                 
+    <div class="justify-content-left w-50">
+      <button class="btn btn-secondary btn-lg" id="join" type="submit">Join Now!</button>
+    </div>            
+  
+</form>
+</div>
+  
+   
+
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!--Bootstrap jquery to be moved to bottom before last body tag-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
+</body>
+</html>

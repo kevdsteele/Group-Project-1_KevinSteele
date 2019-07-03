@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+<head>
+
+  <meta charset="UTF-8">
+  <title>Sign-Up Today!</title>
+
+  <!-- Bootstrap -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <!--Firebase-->
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/6.2.3/firebase-database.js"></script>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <br>
+
+    <!-- Jumbotron -->
+    <div class="jumbotron">
+      <h1 class="text-center">Sign-Up Today to Join Hop'n Brew </h1>
+    </div>
+
+    <div class="row">
+
+      <!-- Sign-Up Card-->
+      <div class="col-lg-6">
+        <div class="card card-default">
+          <div class="card-header">
+            New Member Sign-Up
+          </div>
+          <div class="card-body">
+            <!-- Sign-up Form (note the various input "types")-->
+            <form role="form">
+              <div class="form-group row">
+                <label for="fname-input">First Name:</label>
+                <input class="form-control" id="fname-input" type="text">
+              </div>
+              <div class="form-group row">
+                <label for="lname-input">Last Name:</label>
+                <input class="form-control" id="lname-input" type="text">
+              </div>
+              <div class="form-group row">
+                <label for="email-input">Email:</label>
+                <input class="form-control" id="email-input" type="email">
+              </div>
+              <div class="form-group row">
+                <label for="comment-input">How did you hear about us?</label>
+                <textarea class="form-control" id="comment-input" rows="5"></textarea>
+              </div>
+              <div class="form-group row">
+                <label for="suggestions-input">Suggestions:</label>
+                <textarea class="form-control" id="suggestions-input" rows="5"></textarea>
+              </div>
+              <button class="btn btn-default" id="add-user" type="submit">Submit</button>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <!-- Most Recent Member Card -->
+      <div class="col-lg-6">
+        <div class="card card-default">
+          <div class="card-header">
+            Most Recent Member
+          </div>
+          <div class="card-body" id="recent-member">
+            <h2 id="fname-display"></h2>
+            <h2 id="lname-display"></h2>
+            <h4 id="email-display"></h4>
+            <p id="suggestions-display"></p>
+            <p id="comment-display"></p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- jQuery -->
+  <script src="https://code.jquery.com/jquery.js"></script>
+
+  <!-- JavaScript -->
+  <script>
+   var firebaseConfig = {
+    
+    apiKey: "AIzaSyDE3_11naowktsLw-bEZxFSwOv8VawBMkc",
+    authDomain: "hopinbrew.firebaseapp.com",
+    databaseURL: "https://hopinbrew.firebaseio.com",
+    projectId: "hopinbrew",
+    storageBucket: "hopinbrew.appspot.com",
+    messagingSenderId: "839591263082",
+    appId: "1:839591263082:web:07ec0df0eea18972"
+  };
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  var database = firebase.database();
+
+    // Capture Button Click
+    $("#add-user").on("click", function(event) {
+      // prevent page from refreshing when form tries to submit itself
+      event.preventDefault();
+
+      // Capture user inputs and store them into variables
+      var fname = $("#fname-input").val().trim();
+      var lname = $("#lname-input").val().trim();
+      var email = $("#email-input").val().trim();
+      var suggestions = $("#suggestions-input").val().trim();
+      var comment = $("#comment-input").val().trim();
+
+      var newEmp = {
+          fname: fname,
+          lname: lname,
+          email: email,
+          suggestions: suggestions,
+          comment: comment,
+      };
+
+      database.ref().push(newEmp);
+      
+      // Console log each of the user inputs to confirm we are receiving them
+      console.log(fname);
+      console.log(lname);
+      console.log(email);
+      console.log(suggestions);
+      console.log(comment);
+
+      // Replaces the content in the "recent-member" div with the new info
+      $("#fname-display").text(fname);
+      $("#lname-display").text(lname);
+      $("#email-display").text(email);
+      $("#suggestions-display").text(suggestions);
+      $("#comment-display").text(comment);
+
+      // Clear sessionStorage
+      sessionStorage.clear();
+
+      // Store all content into sessionStorage
+      sessionStorage.setItem("fname", fname);
+      sessionStorage.setItem("lname", lname);
+      sessionStorage.setItem("email", email);
+      sessionStorage.setItem("suggestions", suggestions);
+      sessionStorage.setItem("comment", comment);
+    });
+
+    // By default display the content from sessionStorage
+    $("#name-display").text(sessionStorage.getItem("fname"));
+    $("#name-display").text(sessionStorage.getItem("lname"));
+    $("#email-display").text(sessionStorage.getItem("email"));
+    $("#age-display").text(sessionStorage.getItem("suggestions"));
+    $("#comment-display").text(sessionStorage.getItem("comment"));
+
+  </script>
+
+</body>
+
+</html>
